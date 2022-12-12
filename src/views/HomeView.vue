@@ -40,23 +40,23 @@ export default {
     onUnmounted(() => {
       window.removeEventListener("scroll", handleScroll)
     })
-
-    const handleScroll = (e) => {
-      let element = state.scrollComponent;
-      if (element.getBoundingClientRect().bottom < window.innerHeight) {
-        getData(4);
-      }
-
-      // let bottomOfWindow = document.documentElement.scrollTop + window.innerHeight === document.documentElement.offsetHeight;
-      // console.log('scroltop' + document.documentElement.scrollTop);
-      // console.log('innerheight' + window.innerHeight);
-      // console.log('offsetHeight-----' + document.documentElement.offsetHeight);
-      // console.log('-------' + bottomOfWindow);
-      // console.log('handle function called');
-      // console.log('sum-----' + parseInt(document.documentElement.scrollTop + window.innerHeight))
-      // if (bottomOfWindow) {
+    
+    const handleScroll = () => {
+      // let element = state.scrollComponent;
+      // if (element.getBoundingClientRect().bottom < window.innerHeight) {
       //   getData(4);
       // }
+
+      let bottomOfWindow = parseInt(document.documentElement.scrollTop + window.innerHeight + 1) === parseInt(document.documentElement.offsetHeight);
+      if (bottomOfWindow) {
+        getData(4);
+      }
+      console.log('scroltop' + document.documentElement.scrollTop);
+      console.log('innerheight' + window.innerHeight);
+      console.log('offsetHeight-----' + document.documentElement.offsetHeight);
+      console.log('-------' + bottomOfWindow);
+      console.log('handle function called');
+      console.log('sum-----' + parseInt(document.documentElement.scrollTop + window.innerHeight))
     }
 
     return {
