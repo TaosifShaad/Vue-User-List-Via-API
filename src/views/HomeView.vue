@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <img alt="Vue logo" src="../assets/favicon.png">
-    <div class="list">
+    <div class="list" ref="scrollComponent">
         <UserCard v-for="user in userList" :key="user.id" :result="user"></UserCard>
     </div>
   </div>
@@ -9,7 +9,7 @@
 
 <script>
 // @ is an alias to /src
-import {reactive, toRefs} from 'vue';
+import {reactive, toRefs, onMounted, onUnmounted} from 'vue';
 import UserCard from '@/components/UserCard.vue';
 
 export default {
@@ -19,20 +19,49 @@ export default {
   },
   setup() {
     const state = reactive({
+      scrollComponent : null,
       userList: [],
     });
 
-    async function getData() {
-        const res = await fetch('https://randomuser.me/api/?results=25');
+    async function getData(number) {
+        let apiString = 'https://randomuser.me/api/?results=' + number;
+        const res = await fetch(apiString);
         const finalRes = await res.json();
-        state.userList = finalRes.results;
-        console.log(state.userList);
+        // state.userList = finalRes.results;
+        console.log(finalRes);
+        finalRes.results.map(el => state.userList.push(el));
     }
 
-    getData();
+    getData(8);
+
+    onMounted(() => {
+      window.addEventListener("scroll", handleScroll)
+    })
+    onUnmounted(() => {
+      window.removeEventListener("scroll", handleScroll)
+    })
+
+    const handleScroll = (e) => {
+      let element = state.scrollComponent;
+      if (element.getBoundingClientRect().bottom < window.innerHeight) {
+        getData(4);
+      }
+
+      // let bottomOfWindow = document.documentElement.scrollTop + window.innerHeight === document.documentElement.offsetHeight;
+      // console.log('scroltop' + document.documentElement.scrollTop);
+      // console.log('innerheight' + window.innerHeight);
+      // console.log('offsetHeight-----' + document.documentElement.offsetHeight);
+      // console.log('-------' + bottomOfWindow);
+      // console.log('handle function called');
+      // console.log('sum-----' + parseInt(document.documentElement.scrollTop + window.innerHeight))
+      // if (bottomOfWindow) {
+      //   getData(4);
+      // }
+    }
 
     return {
       ...toRefs(state),
+      handleScroll
     }
   }
 }
