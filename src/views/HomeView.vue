@@ -1,6 +1,5 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/favicon.png">
     <div class="list" ref="scrollComponent">
         <UserCard v-for="user in userList" :key="user.id" :result="user"></UserCard>
     </div>
@@ -28,7 +27,7 @@ export default {
         const res = await fetch(apiString);
         const finalRes = await res.json();
         // state.userList = finalRes.results;
-        console.log(finalRes);
+        // console.log(finalRes);
         finalRes.results.map(el => state.userList.push(el));
     }
 
@@ -47,16 +46,10 @@ export default {
       //   getData(4);
       // }
 
-      let bottomOfWindow = parseInt(document.documentElement.scrollTop + window.innerHeight + 1) === parseInt(document.documentElement.offsetHeight);
+      let bottomOfWindow = parseInt(document.documentElement.scrollTop + window.innerHeight + 1) >= parseInt(document.documentElement.offsetHeight);
       if (bottomOfWindow) {
         getData(4);
       }
-      console.log('scroltop' + document.documentElement.scrollTop);
-      console.log('innerheight' + window.innerHeight);
-      console.log('offsetHeight-----' + document.documentElement.offsetHeight);
-      console.log('-------' + bottomOfWindow);
-      console.log('handle function called');
-      console.log('sum-----' + parseInt(document.documentElement.scrollTop + window.innerHeight))
     }
 
     return {

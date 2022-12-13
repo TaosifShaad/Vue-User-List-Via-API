@@ -33,7 +33,7 @@ export default {
     border-radius: 50px;
     background: linear-gradient(145deg, #d4d4d4, #fbfbfb);
     box-shadow:  20px 20px 60px #c8c8c8, -20px -20px 60px #ffffff;
-    width: 250px;
+    width: 300px;
     margin: auto;
     padding: 30px;
 }
@@ -41,10 +41,6 @@ export default {
 .userImg {
     border-radius: 50%;
     width: 200px;
-
-}
-
-h4, hr {
-    margin-top: -10px;
+    margin-bottom: 25px;
 }
 </style>
