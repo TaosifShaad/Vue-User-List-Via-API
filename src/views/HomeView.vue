@@ -3,6 +3,15 @@
     <div class="list" ref="scrollComponent">
         <UserCard v-for="user in userList" :key="user.id" :result="user"></UserCard>
     </div>
+    <div v-if="loading" class="spinner-grow text-secondary" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+    <div v-if="loading" class="spinner-grow text-secondary" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+    <div v-if="loading" class="spinner-grow text-secondary" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
   </div>
 </template>
 
@@ -20,15 +29,18 @@ export default {
     const state = reactive({
       scrollComponent : null,
       userList: [],
+      loading: false
     });
 
     async function getData(number) {
+        state.loading = true;
         let apiString = 'https://randomuser.me/api/?results=' + number;
         const res = await fetch(apiString);
         const finalRes = await res.json();
         // state.userList = finalRes.results;
         // console.log(finalRes);
         finalRes.results.map(el => state.userList.push(el));
+        state.loading = false;
     }
 
     getData(8);
@@ -74,5 +86,9 @@ export default {
 img {
   width: 200px;
   margin-block-end: 40px;
+}
+.spinner-grow {
+  margin: 0 10px;
+  margin-top: 80px;
 }
 </style>
